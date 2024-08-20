@@ -1,0 +1,50 @@
+{
+  "name": "vite-plugin-css-modules-important",
+  "version": "0.0.1",
+  "description": "module turnto important",
+  "author": "Mia Korennykh",
+  "license": "MIT",
+  "repository": {
+    "type": "git"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "import": {
+        "default": "./dist/index.mjs",
+        "types": "./index.d.mts"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "index.d.mts"
+  ],
+  "scripts": {
+    "dev": "pnpm build -- --watch",
+    "build": "tsup src/index.ts",
+    "build:prod": "cross-env NODE_ENV=production pnpm build"
+  },
+  "peerDependencies": {
+    "vite": ">2.0.0-0"
+  },
+  "devDependencies": {
+    "@alloc/prettier-config": "^1.0.0",
+    "@types/node": "^14.14.20",
+    "cross-env": "^7.0.3",
+    "prettier": "^2.0.5",
+    "tsup": "^5.12.6",
+    "typescript": "4.8.0-dev.20220806",
+    "vite": "latest"
+  },
+  "prettier": "@alloc/prettier-config",
+  "keywords": [
+    "vite",
+    "vite-plugin"
+  ]
+}
