@@ -28,6 +28,7 @@ export default (config: PluginConfig = {}): Plugin => {
     },
     transform(src, id) {
       if (!fileMatch.test(id)) return void 0;
+      src = src.replaceAll("!important;", ";")
       let data = src.replaceAll(";", " !important;")
       return {
         code: data,
