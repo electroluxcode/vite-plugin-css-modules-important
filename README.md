@@ -1,5 +1,5 @@
 fileMatch 用来传入指定添加important的正则
-
+isGlobal 用来指定 是否在:global 中 添加important
 ## usage
 ```ts
 import react from '@vitejs/plugin-react'
