@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-css-modules-important",
   "version": "0.0.1",
-  "description": "module turnto important",
+  "description": "css module turnto important",
   "author": "Mia Korennykh",
   "license": "MIT",
   "repository": {
@@ -46,5 +46,8 @@
   "keywords": [
     "vite",
     "vite-plugin"
-  ]
+  ],
+  "dependencies": {
+    "postcss": "^8.4.41"
+  }
 }

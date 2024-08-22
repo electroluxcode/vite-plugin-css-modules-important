@@ -1,11 +1,39 @@
 import type { Plugin } from 'vite'
+import postcss from 'postcss';
+
+
+import type { Rule, PluginCreator } from 'postcss';
 
 type PluginConfig = {
-  fileMatch?: RegExp
+  fileMatch?: RegExp;
+  // 是否针对 global声明
+  isGlobal?: boolean
 }
+function ruleHandler(rule: Rule) {
+  rule.nodes.forEach((node) => {
+    if (node.type === 'decl') {
+      node.important = true;
+    }
+    if (node.type === 'rule') {
+      ruleHandler(node);
+    }
+  })
+}
+const plugin: PluginCreator<any> = () => {
+  return {
+    // @ts-ignore
+    Root: (root) => {
+      // fileRegex 
+      root.walkRules(/:global/, ruleHandler);
+    },
+    postcssPlugin: 'postcss-global-important-plugin'
+  }
+}
+plugin.postcss = true;
 
 export default (config: PluginConfig = {}): Plugin => {
   const fileMatch = config.fileMatch ?? /\.(module.less)$/
+  const isGlobal = config.isGlobal
   let cssModules: Record<string, string> = {}
   const virtualModuleId = 'virtual:css-modules-important'
   return {
@@ -28,12 +56,36 @@ export default (config: PluginConfig = {}): Plugin => {
     },
     transform(src, id) {
       if (!fileMatch.test(id)) return void 0;
+      
+      // 是否全局声明
+      if (isGlobal) {
+
+        // 去除换行符
+        let tempArr:any = src.split("\n")
+        tempArr = tempArr.map((item:any) => {
+          if (item.includes("\/\/")){ return null;}
+          return item
+        }).filter((item:any) => item !== null);
+        src = tempArr.join("\n")
+        return new Promise((resolve) => {
+          postcss([plugin]).process(src).then(({ css }: any) => {
+            resolve({
+              code: css,
+              map: null
+            })
+          })
+        })
+
+      }
+
       src = src.replaceAll("!important;", ";")
       let data = src.replaceAll(";", " !important;")
-      return {
-        code: data,
-        map: null
-      };
+      return new Promise((resolve) => {
+        resolve({
+          code: data,
+          map: null
+        })
+      })
 
 
     },
