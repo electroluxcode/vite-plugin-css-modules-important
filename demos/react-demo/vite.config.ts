@@ -6,7 +6,7 @@ import pluginInspect from 'vite-plugin-inspect'
 export default defineConfig({
   plugins: [ inlineCSSModules({
     "fileMatch": /\.(module.less)$/,
-    "isGlobal":false
+    "isGlobal":true
   }),react(), pluginInspect()],
   build: {
     sourcemap: true,

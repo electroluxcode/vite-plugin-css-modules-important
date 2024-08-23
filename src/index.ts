@@ -1,6 +1,6 @@
 import type { Plugin } from 'vite'
 import postcss from 'postcss';
-
+import postcssless from 'postcss-less';
 
 import type { Rule, PluginCreator } from 'postcss';
 
@@ -55,8 +55,16 @@ export default (config: PluginConfig = {}): Plugin => {
       return cssModules[file]
     },
     transform(src, id) {
-      if (!fileMatch.test(id)) return void 0;
+      // let defaultType = ""
+      let config:any
+      if (!fileMatch.test(id)) {return void 0;}
       
+
+      if(/\.(module.less)$/.test(id)){
+        config={
+          syntax: postcssless
+        }
+      }
       // 是否全局声明
       if (isGlobal) {
 
@@ -68,9 +76,9 @@ export default (config: PluginConfig = {}): Plugin => {
         }).filter((item:any) => item !== null);
         src = tempArr.join("\n")
         return new Promise((resolve) => {
-          postcss([plugin]).process(src).then(({ css }: any) => {
+          postcss([plugin]).process(src,config).then(({ css }: any) => {
             resolve({
-              code: css,
+              code: css.content,
               map: null
             })
           })

@@ -48,6 +48,9 @@
     "vite-plugin"
   ],
   "dependencies": {
-    "postcss": "^8.4.41"
+    "@types/postcss-less": "^4.0.6",
+    "postcss": "^8.4.41",
+    "postcss-less": "^6.0.0",
+    "postcss-less-engine": "^0.6.2"
   }
 }
