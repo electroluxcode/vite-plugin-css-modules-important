@@ -4,5 +4,5 @@ import hello from "./test.module.less"
 
 
 export const Root = () => <div className={hello.container}>
-    <div className={hello.hello} >Hello world</div>
+    <div className='hello' >Hello world</div>
 </div>

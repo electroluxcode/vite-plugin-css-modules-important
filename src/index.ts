@@ -78,7 +78,7 @@ export default (config: PluginConfig = {}): Plugin => {
         return new Promise((resolve) => {
           postcss([plugin]).process(src,config).then(({ css }: any) => {
             resolve({
-              code: css.content,
+              code: css,
               map: null
             })
           })

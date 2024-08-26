@@ -4,14 +4,16 @@
 // 用来测试 global是否生效
 .container{
     .button-mixin() {
-        color: red;
+        color: red !important;
     }
-    .hello:hover{
-        .button-mixin();
-       
-    }
+   
     :global{
-        
+        .hello:hover{
+            .button-mixin();
+        }
+        .hello{
+             color: blue
+        }
     }
    
       
